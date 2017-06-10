@@ -42,8 +42,10 @@ public class TeacherService {
 
         Teacher newTeacher = new Teacher();
         newTeacher.setCi(newTeacherDTO.getCi());
-        newTeacherDTO.setName(newTeacherDTO.getName());
-        newTeacherDTO.setProfession(newTeacherDTO.getProfession());
+        newTeacher.setName(newTeacherDTO.getName());
+        newTeacher.setProfession(newTeacherDTO.getProfession());
+
+        teacherRepository.save(newTeacher);
     }
 
     public Teacher getTeacher(String id){
