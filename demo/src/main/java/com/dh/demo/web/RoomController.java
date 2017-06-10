@@ -33,17 +33,9 @@ public class RoomController {
     }
 
     public static class RoomRequestDTO{
-        private String id;
+        //private String id;
         private String code;
         private Long capacity;
-
-        public String getId() {
-            return id;
-        }
-
-        public void setId(String id) {
-            this.id = id;
-        }
 
         public String getCode() {
             return code;
