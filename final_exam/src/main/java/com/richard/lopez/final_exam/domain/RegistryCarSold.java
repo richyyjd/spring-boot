@@ -14,7 +14,6 @@ public class RegistryCarSold {
 
     @Id
     private String id;
-
     @DBRef
     private Seller seller;
     @DBRef
