@@ -1,0 +1,430 @@
+{
+name: "chat-persistence",
+dataStoreType: "DOCUMENT",
+entities: [
+{
+name: "Conversation",
+attributes: [
+{
+name: "label",
+type: "STRING",
+required: true
+},
+{
+name: "resourceId",
+type: "STRING",
+required: true
+},
+{
+name: "resourceUUID",
+type: "STRING",
+required: true
+},
+{
+name: "appResourceId",
+type: "STRING",
+required: true
+},
+{
+name: "conversationType",
+type: "ENUM",
+enumType: "ConversationType",
+defaultValue: "PUBLIC",
+required: false
+},
+{
+name: "createdDate",
+type: "DATETIME",
+auto-generate-on-create: true
+},
+{
+name: "lastUpdateDate",
+type: "DATETIME",
+auto-generate-on-update: true
+}
+],
+customQueries: [
+{
+query: "findByResourceIdAndLabel",
+returnType: "COLLECTION",
+pagination: false
+},
+{
+query: "findByResourceIdAndLabelIgnoreCase",
+returnType: "COLLECTION",
+pagination: false
+},
+{
+query: "findByResourceId",
+returnType: "COLLECTION",
+pagination: false
+},
+{
+query: "findByLabelIn",
+returnType: "COLLECTION",
+pagination: false
+},
+{
+query: "findByLabelNotIn",
+returnType: "COLLECTION",
+pagination: false
+}
+]
+},
+{
+name: "JoinRequest",
+attributes: [
+{
+name: "sourceParticipantId",
+type: "STRING",
+required: true
+},
+{
+name: "targetParticipantId",
+type: "STRING",
+required: true
+},
+{
+name: "createdDate",
+type: "DATETIME",
+auto-generate-on-create: true
+},
+{
+name: "responseDate",
+type: "DATETIME",
+auto-generate-on-update: true
+},
+{
+name: "conversationId",
+type: "STRING",
+required: true
+},
+{
+name: "joinState",
+type: "ENUM",
+enumType: "JoinState",
+required: true
+},
+{
+name: "joinRequestType",
+type: "ENUM",
+enumType: "JoinRequestType",
+required: true
+}
+],
+customQueries: [
+{
+query: "findByConversationId",
+returnType: "COLLECTION",
+pagination: false
+}
+]
+},
+{
+name: "Message",
+attributes: [
+{
+name: "conversationId",
+type: "STRING",
+required: true
+},
+{
+name: "contentType",
+type: "ENUM",
+enumType: "ContentType",
+required: true
+},
+{
+name: "seen",
+type: "BOOLEAN",
+defaultValue: false
+},
+{
+name: "deleted",
+type: "BOOLEAN",
+defaultValue: false
+},
+{
+name: "edited",
+type: "BOOLEAN",
+defaultValue: false
+},
+{
+name: "createdDate",
+type: "DATETIME",
+auto-generate-on-create: true
+},
+{
+name: "lastUpdateDate",
+type: "DATETIME",
+auto-generate-on-update: true
+},
+{
+name: "messageType",
+type: "ENUM",
+enumType: "MessageType",
+required: true
+},
+{
+name: "joinRequestId",
+type: "STRING"
+},
+{
+name: "sender",
+type: "REFERENCE",
+required: true,
+referenceInfo: {
+type: "Participant"
+}
+}
+],
+customQueries: [
+{
+query: "findByConversationIdAndCreatedDateLessThanOrderByCreatedDateDesc",
+returnType: "COLLECTION",
+pagination: true
+},
+{
+query: "findByConversationIdAndCreatedDateGreaterThanOrderByCreatedDateAsc",
+returnType: "COLLECTION",
+pagination: true
+},
+{
+query: "findByConversationIdAndCreatedDateGreaterThan",
+returnType: "COLLECTION",
+pagination: false
+},
+{
+query: "findByConversationIdAndSeenAndMessageTypeAndCreatedDateLessThanOrderByCreatedDateDesc",
+returnType: "COLLECTION",
+pagination: true
+},
+{
+query: "findTop1ByConversationIdAndSeenAndMessageType",
+returnType: "OBJECT",
+pagination: false
+}
+]
+},
+{
+name: "Participant",
+attributes: [
+{
+name: "conversationId",
+type: "STRING",
+required: true
+},
+{
+name: "userId",
+type: "STRING",
+required: true
+},
+{
+name: "participantType",
+type: "ENUM",
+enumType: "ParticipantType",
+defaultValue: "DEFAULT"
+},
+{
+name: "createdDate",
+type: "DATETIME",
+auto-generate-on-create: true
+},
+{
+name: "lastUpdateDate",
+type: "DATETIME",
+auto-generate-on-update: true
+},
+{
+name: "removed",
+type: "BOOLEAN"
+},
+{
+name: "joinedOn",
+type: "LONG"
+}
+],
+customQueries: [
+{
+query: "findByConversationId",
+returnType: "COLLECTION",
+pagination: false
+},
+{
+query: "findByConversationIdAndParticipantType",
+returnType: "COLLECTION",
+pagination: false
+},
+{
+query: "findByConversationIdAndUserId",
+returnType: "COLLECTION",
+pagination: false
+},
+{
+query: "findByConversationIdAndUserIdAndParticipantType",
+returnType: "COLLECTION",
+pagination: false
+},
+{
+query: "findByConversationIdOrderByJoinedOnAsc",
+returnType: "COLLECTION",
+pagination: true
+},
+{
+query: "findByIdAndConversationId",
+returnType: "COLLECTION",
+pagination: false
+}
+]
+},
+{
+name: "Recipient",
+attributes: [
+{
+name: "messageId",
+type: "STRING",
+required: true
+},
+{
+name: "participantId",
+type: "STRING",
+required: true
+},
+{
+name: "recipientState",
+type: "ENUM",
+enumType: "RecipientState",
+required: false
+}
+],
+customQueries: [
+{
+query: "findByParticipantIdAndMessageId",
+returnType: "COLLECTION",
+pagination: false
+},
+{
+query: "findByMessageIdAndParticipantIdAndRecipientState",
+returnType: "COLLECTION",
+pagination: false
+},
+{
+query: "findByParticipantIdAndRecipientState",
+returnType: "COLLECTION",
+pagination: false
+},
+{
+query: "findByParticipantId",
+returnType: "COLLECTION",
+pagination: false
+},
+{
+query: "countByMessageIdAndParticipantIdAndRecipientState",
+returnType: "LONG",
+pagination: false
+},
+{
+query: "countByParticipantIdAndRecipientState",
+returnType: "LONG",
+pagination: false
+},
+{
+query: "countByMessageIdAndRecipientState",
+returnType: "LONG",
+pagination: false
+}
+]
+},
+{
+name: "TextContent",
+attributes: [
+{
+name: "messageId",
+type: "STRING",
+required: true
+},
+{
+name: "objectType",
+type: "ENUM",
+enumType: "ObjectType",
+required: false
+},
+{
+name: "value",
+type: "STRING",
+length: 1650,
+required: false
+}
+],
+customQueries: [
+{
+query: "findByMessageId",
+returnType: "COLLECTION",
+pagination: false
+}
+]
+}
+],
+enums: [
+{
+name: "ParticipantType",
+values: [
+"OWNER",
+"GUEST",
+"DEFAULT"
+]
+},
+{
+name: "JoinState",
+values: [
+"SENT",
+"ACCEPTED",
+"REJECTED"
+]
+},
+{
+name: "JoinRequestType",
+values: [
+"INVITE",
+"REQUEST"
+]
+},
+{
+name: "RecipientState",
+values: [
+"READ",
+"UNREAD"
+]
+},
+{
+name: "ContentType",
+values: [
+"TEXT",
+"OBJECT"
+]
+},
+{
+name: "ConversationType",
+values: [
+"PRIVATE",
+"PUBLIC"
+]
+},
+{
+name: "MessageType",
+values: [
+"MESSAGE",
+"NOTIFICATION",
+"REPLY"
+]
+},
+{
+name: "ObjectType",
+values: [
+"MESSAGE_CONTENT",
+"REPLY_CONTENT",
+"HISTORICAL_CONTENT"
+]
+}
+]
+}
