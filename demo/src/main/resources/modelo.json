@@ -16,55 +16,6 @@ type: "STRING",
 required: true
 },
 {
-name: "resourceUUID",
-type: "STRING",
-required: true
-},
-{
-name: "appResourceId",
-type: "STRING",
-required: true
-},
-{
-name: "conversationType",
-type: "ENUM",
-enumType: "ConversationType",
-defaultValue: "PUBLIC",
-required: false
-},
-{
-name: "createdDate",
-type: "DATETIME",
-auto-generate-on-create: true
-},
-{
-name: "lastUpdateDate",
-type: "DATETIME",
-auto-generate-on-update: true
-}
-],
-customQueries: [
-{
-query: "findByResourceIdAndLabel",
-returnType: "COLLECTION",
-pagination: false
-},
-{
-query: "findByResourceIdAndLabelIgnoreCase",
-returnType: "COLLECTION",
-pagination: false
-},
-{
-query: "findByResourceId",
-returnType: "COLLECTION",
-pagination: false
-},
-{
-query: "findByLabelIn",
-returnType: "COLLECTION",
-pagination: false
-},
-{
 query: "findByLabelNotIn",
 returnType: "COLLECTION",
 pagination: false
