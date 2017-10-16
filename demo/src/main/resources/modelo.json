@@ -178,33 +178,6 @@ type: "Participant"
 }
 }
 ],
-customQueries: [
-{
-query: "findByConversationIdAndCreatedDateLessThanOrderByCreatedDateDesc",
-returnType: "COLLECTION",
-pagination: true
-},
-{
-query: "findByConversationIdAndCreatedDateGreaterThanOrderByCreatedDateAsc",
-returnType: "COLLECTION",
-pagination: true
-},
-{
-query: "findByConversationIdAndCreatedDateGreaterThan",
-returnType: "COLLECTION",
-pagination: false
-},
-{
-query: "findByConversationIdAndSeenAndMessageTypeAndCreatedDateLessThanOrderByCreatedDateDesc",
-returnType: "COLLECTION",
-pagination: true
-},
-{
-query: "findTop1ByConversationIdAndSeenAndMessageType",
-returnType: "OBJECT",
-pagination: false
-}
-]
 },
 {
 name: "Participant",
